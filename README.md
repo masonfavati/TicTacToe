@@ -41,3 +41,28 @@ Install the project dependencies:
 
 ```bash
 uv sync
+```
+
+Run the game:
+
+```bash
+uv run tictactoe
+```
+
+## Running the Tests
+
+Run the complete test suite with:
+
+```bash
+uv run pytest -v
+```
+
+## Project Structure
+
+`game.py` contains the game rules and state management.
+
+`gui.py` contains the Tkinter graphical interface and connects player clicks to the game logic.
+
+`__init__.py` provides the application's entry point.
+
+The `tests` directory contains automated tests for the game logic and graphical application behavior.
