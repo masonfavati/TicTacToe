@@ -82,3 +82,15 @@ def test_scores_persist_between_games() -> None:
     assert gui.tie_score == 1
 
     root.destroy()
+
+def test_declining_play_again_closes_window() -> None:
+    root = tk.Tk()
+    root.withdraw()
+
+    gui = TicTacToeGUI(root)
+    gui.game.status = GameStatus.X_WON
+
+    with patch("tictactoe.gui.messagebox.askyesno", return_value=False):
+        gui._finish_game()
+
+    assert gui.x_score == 1

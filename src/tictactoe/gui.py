@@ -111,8 +111,6 @@ class TicTacToeGUI:
 
         if self.game.status != GameStatus.PLAYING:
             self._finish_game()
-
-        self._refresh_board()
     
     def _refresh_board(self) -> None:
         for board_index in range(9):
