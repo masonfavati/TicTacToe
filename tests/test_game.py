@@ -133,3 +133,38 @@ def test_finished_game_rejects_moves() -> None:
 
     with pytest.raises(ValueError, match="The game is already finished."):
         game.make_move(4, 4)
+
+def test_game_can_end_in_tie() -> None:
+    game = Game()
+
+    finished_statuses = [
+        BoardStatus.X_WON,
+        BoardStatus.O_WON,
+        BoardStatus.TIED,
+        BoardStatus.O_WON,
+        BoardStatus.TIED,
+        BoardStatus.X_WON,
+        BoardStatus.TIED,
+        BoardStatus.X_WON,
+        BoardStatus.OPEN,
+    ]
+
+    for index, status in enumerate(finished_statuses):
+        game.boards[index].status = status
+
+    game.current_player = Player.O
+    game.required_board = None
+
+    game.boards[8].cells[0] = Player.X
+    game.boards[8].cells[1] = Player.O
+    game.boards[8].cells[2] = Player.X
+    game.boards[8].cells[3] = Player.X
+    game.boards[8].cells[4] = Player.O
+    game.boards[8].cells[5] = Player.O
+    game.boards[8].cells[6] = Player.O
+    game.boards[8].cells[7] = Player.X
+
+    game.make_move(8, 8)
+
+    assert game.boards[8].status == BoardStatus.TIED
+    assert game.status == GameStatus.TIED

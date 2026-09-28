@@ -1,2 +1,9 @@
+import tkinter as tk
+
+from tictactoe.gui import TicTacToeGUI
+
+
 def main() -> None:
-    print("Hello from tictactoe!")
+    root = tk.Tk()
+    TicTacToeGUI(root)
+    root.mainloop()
