@@ -168,3 +168,27 @@ def test_game_can_end_in_tie() -> None:
 
     assert game.boards[8].status == BoardStatus.TIED
     assert game.status == GameStatus.TIED
+
+def test_miniboard_stores_winning_line() -> None:
+    board = MiniBoard()
+
+    board.make_move(0, Player.X)
+    board.make_move(3, Player.O)
+    board.make_move(1, Player.X)
+    board.make_move(4, Player.O)
+    board.make_move(2, Player.X)
+
+    assert board.status == BoardStatus.X_WON
+    assert board.winning_line == (0, 1, 2)
+
+def test_game_stores_winning_line() -> None:
+    game = Game()
+
+    game.boards[0].status = BoardStatus.X_WON
+    game.boards[1].status = BoardStatus.X_WON
+    game.boards[2].status = BoardStatus.X_WON
+
+    game._update_status()
+
+    assert game.status == GameStatus.X_WON
+    assert game.winning_line == (0, 1, 2)

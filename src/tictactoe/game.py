@@ -35,6 +35,7 @@ class MiniBoard:
     def __init__(self) -> None:
         self.cells: list[Player | None] = [None] * 9
         self.status = BoardStatus.OPEN
+        self.winning_line: tuple[int, int, int] | None = None
 
     def make_move(self, cell: int, player: Player) -> None:
         if self.status != BoardStatus.OPEN:
@@ -56,6 +57,8 @@ class MiniBoard:
                 and self.cells[first] == self.cells[second]
                 and self.cells[first] == self.cells[third]
             ):
+                self.winning_line = (first, second, third)
+
                 winner = self.cells[first]
 
                 if winner == Player.X:
@@ -64,7 +67,7 @@ class MiniBoard:
                     self.status = BoardStatus.O_WON
 
                 return
-            
+
         if all(cell is not None for cell in self.cells):
             self.status = BoardStatus.TIED
 
@@ -74,7 +77,8 @@ class Game:
         self.current_player = Player.X
         self.required_board: int | None = None
         self.status = GameStatus.PLAYING
-    
+        self.winning_line: tuple[int, int, int] | None = None
+
     def make_move(self, board: int, cell: int) -> None:
         if self.status != GameStatus.PLAYING:
             raise ValueError("The game is already finished.")
@@ -113,7 +117,7 @@ class Game:
         if status == BoardStatus.O_WON:
             return Player.O
         return None
-    
+
     def _update_status(self) -> None:
         for first, second, third in WINNING_LINES:
             first_owner = self._board_owner(first)
@@ -122,10 +126,13 @@ class Game:
                 and first_owner == self._board_owner(second)
                 and first_owner == self._board_owner(third)
             ):
+                self.winning_line = (first, second, third)
+
                 if first_owner == Player.X:
                     self.status = GameStatus.X_WON
                 else:
                     self.status = GameStatus.O_WON
                 return
+
         if all(board.status != BoardStatus.OPEN for board in self.boards):
             self.status = GameStatus.TIED

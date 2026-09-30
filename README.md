@@ -1,6 +1,6 @@
 # Ultimate Tic-Tac-Toe
 
-A graphical two-player Tic-Tac-Toe game built with Python and Tkinter. The game uses a 3×3 big board where each square contains its own 3×3 Tic-Tac-Toe miniboard.
+A web-based two-player Ultimate Tic-Tac-Toe game built with Python and Flask. The game uses a 3×3 big board where each square contains its own 3×3 Tic-Tac-Toe miniboard.
 
 ## How to Play
 
@@ -16,22 +16,29 @@ The overall game is won by claiming three miniboards in a row on the big board. 
 
 ## Features
 
-- Graphical 9×9 playing interface
+- Web-based 9×9 playing interface
 - Clickable Tic-Tac-Toe cells
 - Forced-miniboard move system
+- Visual highlighting of currently playable miniboards
+- User-facing miniboard numbering from 1–9
 - Miniboard win and tie detection
+- Animated winning lines for miniboard victories
+- Large X, O, and TIE displays for completed miniboards
 - Overall game win and tie detection
-- Visual X, O, and TIE displays for completed miniboards
+- Persistent animated winning line for overall victories
+- Blue X and red O visual styling
+- Color-coded turn indicator
 - Running score for X, O, and ties
-- Play-again option that resets the board while preserving the score
-- Automated tests for game logic and GUI behavior
+- Play Again option that resets the board while preserving the score
+- Game state preserved when the browser page is refreshed
+- Automated tests for game logic and web application behavior
 
 ## Requirements
 
 - Python 3.14 or newer
 - uv
 
-Tkinter is used for the graphical interface.
+Flask is used to provide the web application.
 
 ## Running the Game
 
@@ -43,15 +50,23 @@ Install the project dependencies:
 uv sync
 ```
 
-Run the game:
+Start the web application:
 
 ```bash
 uv run tictactoe
 ```
 
+Then open the following address in a web browser:
+
+```text
+http://127.0.0.1:5000
+```
+
+Press `Ctrl+C` in the terminal to stop the server.
+
 ## Running the Tests
 
-Run the complete test suite with:
+Run the complete automated test suite with:
 
 ```bash
 uv run pytest -v
@@ -59,10 +74,31 @@ uv run pytest -v
 
 ## Project Structure
 
-`game.py` contains the game rules and state management.
+```text
+src/
+└── tictactoe/
+    ├── __init__.py
+    ├── game.py
+    ├── web.py
+    ├── templates/
+    │   └── index.html
+    └── static/
+        ├── style.css
+        └── game.js
 
-`gui.py` contains the Tkinter graphical interface and connects player clicks to the game logic.
+tests/
+├── test_game.py
+└── test_web.py
+```
 
-`__init__.py` provides the application's entry point.
+`game.py` contains the core Ultimate Tic-Tac-Toe game logic.
 
-The `tests` directory contains automated tests for the game logic and graphical application behavior.
+`web.py` contains the Flask web application and routes.
+
+`templates/index.html` contains the structure of the web interface.
+
+`static/style.css` contains the visual styling and winning-line animations.
+
+`static/game.js` handles browser interaction with the Flask server and updates the game interface.
+
+The `tests` directory contains automated tests for the game logic and web application behavior.
