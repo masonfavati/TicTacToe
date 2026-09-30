@@ -104,4 +104,5 @@ def reset():
 
 
 def main() -> None:
+    print("Ultimate Tic-Tac-Toe running at http://127.0.0.1:5000")
     app.run(debug=False)
